@@ -1,11 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagrama de Bades de Datos del subsitema Inventario</title>
+    <title>Diseño de la Base de Datos del Subsistema de Inventario</title>
+    <link rel="" href=""> 
 </head>
 <body>
+
+    <h1>Diseño de la Base de Datos del Subsistema de Inventario</h1>
     
+    <h2>Descripción de la Arquitectura de la Base de Datos</h2>
+    <p>La base de datos <strong>Inventario</strong> está diseñada para gestionar inventarios de insumos médicos, usuarios, equipos y transacciones, garantizando la organización y consistencia de los datos. Contiene las siguientes tablas:</p>
+    
+    <ul>
+        <li><strong>I. Insumos:</strong> Almacena información sobre insumos médicos, incluyendo campos como <em>Nombre</em>, <em>Tipo</em>, <em>Cantidad</em>, <em>PrecioCompra</em>, etc.</li>
+        <li><strong>II. Usuarios:</strong> Contiene datos de usuarios del sistema, como <em>Nombre</em>, <em>Email</em>, <em>Contraseña</em>, y su <em>Rol</em>.</li>
+        <li><strong>III. Equipos:</strong> Almacena información sobre equipos médicos, con campos como <em>Nombre</em>, <em>Marca</em>, <em>Modelo</em>, y su <em>Estado</em>.</li>
+        <li><strong>IV. Transacciones:</strong> Registra las transacciones realizadas, vinculando insumos y usuarios.</li>
+    </ul>
+
+    <h2>Normalización de la Base de Datos</h2>
+    <p>La base de datos ha sido diseñada siguiendo las primeras tres formas normales (1NF, 2NF, 3NF) para garantizar la organización y consistencia de los datos:</p>
+    
+    <h3>1NF (Primera Forma Normal)</h3>
+    <p>Cada tabla tiene una clave primaria única y todas las entradas son atómicas, lo que significa que cada campo contiene un solo valor.</p>
+
+    <h3>2NF (Segunda Forma Normal)</h3>
+    <p>Se ha eliminado la dependencia parcial de los atributos, asegurando que todos los atributos dependen completamente de la clave primaria.</p>
+
+    <h3>3NF (Tercera Forma Normal)</h3>
+    <p>No hay dependencias transitivas; todos los atributos son dependientes directamente de la clave primaria.</p>
+
+    <h2>Código SQL para Crear Tablas</h2>
+    <pre>
+CREATE DATABASE Inventario;
+GO
+
+USE Inventario;
+GO
+
+CREATE TABLE Insumos (
+    InsumoID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Tipo VARCHAR(50) NOT NULL,
+    Cantidad INT NOT NULL,
+    PrecioCompra DECIMAL(10, 2) NOT NULL, 
+    PrecioVenta DECIMAL(10, 2) NOT NULL,  
+    FechaCaducidad DATE,
+    Defecto VARCHAR(255),
+    FechaRegistro DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Usuarios (
+    UsuarioID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    Contraseña VARCHAR(255) NOT NULL, 
+    Rol VARCHAR(10) NOT NULL, 
+    FechaRegistro DATETIME DEFAULT GETDATE()
+);
+
+CREATE TABLE Equipos (
+    EquipoID INT PRIMARY KEY IDENTITY(1,1),
+    Nombre VARCHAR(100) NOT NULL,
+    Marca VARCHAR(50) NOT NULL,
+    Modelo VARCHAR(50) NOT NULL,
+    NumeroSerie VARCHAR(100) NOT NULL,
+    Estado VARCHAR(50) NOT NULL, 
+    FechaRegistro DATETIME DEFAULT GETDATE(),
+    UsuarioID INT NULL,
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID) 
+);
+
+CREATE TABLE Transacciones (
+    TransaccionID INT PRIMARY KEY IDENTITY(1,1),
+    InsumoID INT NOT NULL,
+    UsuarioID INT NOT NULL,
+    FechaTransaccion DATETIME DEFAULT GETDATE(),
+    FOREIGN KEY (InsumoID) REFERENCES Insumos(InsumoID),
+    FOREIGN KEY (UsuarioID) REFERENCES Usuarios(UsuarioID)
+);
+    </pre>
+
+    <h2>Código SQL para Agregar Registros</h2>
+    <pre>
+-- Registros de Insumos
+INSERT INTO Insumos (Nombre, Tipo, Cantidad, PrecioCompra, PrecioVenta, FechaCaducidad) VALUES
+('Gasa', 'Material', 100, 0.30, 0.50, '2025-12-31'),
+('Algodón', 'Material', 200, 0.20, 0.40, '2025-06-30'),
+('Jeringas', 'Material', 150, 0.05, 0.15, '2024-12-15'),
+('Guantes', 'Material', 300, 0.02, 0.10, '2025-08-20'),
+('Mascarillas', 'Material', 500, 0.10, 0.25, '2026-03-01'),
+('Antiséptico', 'Medicamento', 80, 1.50, 3.00, '2025-01-10'),
+('Ibuprofeno', 'Medicamento', 120, 0.80, 2.00, '2024-11-20'),
+('Paracetamol', 'Medicamento', 200, 0.75, 1.50, '2025-05-15'),
+('Esparadrapo', 'Material', 250, 0.15, 0.30, '2025-07-15'),
+('Oxitocina', 'Medicamento', 60, 4.00, 8.00, '2025-09-25'),
+('Sueros', 'Medicamento', 75, 2.50, 5.00, '2026-02-01'),
+('Analgésicos', 'Medicamento', 90, 1.00, 2.50, '2024-10-10'),
+('Antibióticos', 'Medicamento', 120, 3.00, 6.00, '2025-04-05'),
+('Cinta Métrica', 'Material', 50, 1.50, 3.00, '2026-01-01'),
+('Tijeras', 'Material', 45, 3.00, 5.00, '2025-10-20'),
+('Bolsas de Sangre', 'Material', 20, 80.00, 150.00, '2024-12-31'),
+('Suturas', 'Material', 80, 2.00, 4.00, '2025-11-15'),
+('Banda Elástica', 'Material', 200, 0.25, 0.50, '2025-08-01'),
+('Pañuelos', 'Material', 150, 0.05, 0.10, '2025-12-01'),
+('Cánula', 'Material', 60, 0.75, 1.50, '2025-03-20'),
+('Guías de Procedimientos', 'Material', 50, 10.00, 20.00, NULL),
+('Láminas de Yeso', 'Material', 30, 5.00, 10.00, '2025-09-15'),
+('Jeringas de Insulina', 'Material', 80, 0.15, 0.30, '2025-04-01'),
+('Toallas Absorbentes', 'Material', 120, 0.20, 0.40, '2026-02-28'),
+('Tiras Reactivas', 'Material', 100, 0.50, 1.00, '2025-11-05'),
+('Cubrebocas N95', 'Material', 150, 1.00, 2.00, '2026-01-10');
+
+-- Registros de Equipos
+INSERT INTO Equipos (Nombre, Marca, Modelo, NumeroSerie, Estado, UsuarioID) VALUES
+('Tensiómetro', 'Marca A', 'Modelo 1', 'TS12345', 'Disponible', NULL),
+('Termómetro', 'Marca B', 'Modelo 2', 'TM12346', 'Disponible', NULL),
+('Desfibrilador', 'Marca C', 'Modelo 3', 'DF12347', 'En mantenimiento', NULL),
+('Electrocardiógrafo', 'Marca D', 'Modelo 4', 'EC12348', 'Disponible', NULL),
+('Respirador', 'Marca E', 'Modelo 5', 'RP12349', 'Disponible', NULL),
+('Oxímetro', 'Marca F', 'Modelo 6', 'OX12350', 'Disponible', NULL),
+('Monitor de Signos Vitales', 'Marca G', 'Modelo 7', 'MV12351', 'En mantenimiento', NULL),
+('Máquina de Diálisis', 'Marca H', 'Modelo 8', 'MD12352', 'Disponible', NULL),
+('Cama de Hospital', 'Marca I', 'Modelo 9', 'CH12353', 'Disponible', NULL),
+('Silla de Ruedas', 'Marca J', 'Modelo 10', 'SR12354', 'Disponible', NULL);
+
+-- Registros de Usuarios
+INSERT INTO Usuarios (Nombre, Email, Contraseña, Rol) VALUES
+('Juan Pérez', 'juan.perez@example.com', 'hashed_password1', 'Dueño'),
+('María López', 'maria.lopez@example.com', 'hashed_password2', 'Médico');
+    </pre>
+
+    <footer>
+        <p>Este documento describe el diseño de la base de datos del subsistema de inventario y cómo se implementa para asegurar la organización y consistencia de los datos.</p>
+    </footer>
+
 </body>
 </html>
