@@ -15,13 +15,18 @@
     <img src="../Imagenes/modeloInventarioBD.jpeg" alt="Modelo de la base de datos Inventario" width="900">
     
     <h2>Descripción de la Arquitectura de la Base de Datos</h2>
-    <p>La base de datos Inventario está diseñada para gestionar inventarios de insumos médicos, usuarios, equipos y transacciones, garantizando la organización y consistencia de los datos. Contiene las siguientes tablas:</p>
+    <p>Esta arquitectura de base de datos soporta las funcionalidades del subsistema, facilitando tareas como la gestión de usuarios, el seguimiento de inventarios y la realización de 
+        transacciones en tiempo real, asegurando la organización y la consistencia de los datos. A continuación,
+         se presentan las tablas que componen esta estructura:</p>
     
     <ul>
         <p><strong> Insumos:</strong> Almacena información sobre insumos médicos, incluyendo campos como <em>Nombre</em>, <em>Tipo</em>, <em>Cantidad</em>, <em>PrecioCompra</em>, etc.</p>
-        <p><strong> Usuarios:</strong> Contiene datos de usuarios del sistema, como <em>Nombre</em>, <em>Email</em>, <em>Contraseña</em>, y su <em>Rol</em>.</p>
-        <p><strong> Equipos:</strong> Almacena información sobre equipos médicos, con campos como <em>Nombre</em>, <em>Marca</em>, <em>Modelo</em>, y su <em>Estado</em>.</p>
-        <p><strong> Transacciones:</strong> Registra las transacciones realizadas, vinculando insumos y usuarios.</p>
+        <p><strong> Usuarios:</strong> Contiene datos de usuarios del sistema, como <em>Nombre</em>, <em>Email</em>, <em>Contraseña</em>, y su <em>Rol</em>. Esto permite la autenticación y 
+            autorización de los usuarios.</p>
+        <p><strong> Equipos:</strong> Almacena información sobre equipos médicos, con campos como <em>Nombre</em>, <em>Marca</em>, <em>Modelo</em>, y su <em>Estado</em>. Esta tabla ayuda a 
+            gestionar el inventario de equipos disponibles para su uso.</p>
+        <p><strong> Transacciones:</strong> Registra las transacciones realizadas, vinculando insumos y usuarios. Esta tabla es crucial para rastrear el uso de insumos médicos y realizar 
+            auditorías.</p>
     </ul>
 
     <h2>Normalización de la Base de Datos</h2>
