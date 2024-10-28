@@ -43,20 +43,20 @@
         <h3>1NF (Primera Forma Normal)</h3>
         <p>Cada tabla tiene una clave primaria única y todas las entradas son atómicas, lo que significa que cada campo contiene un solo valor.</p>
         <p>Cada tabla tiene una clave primaria única, lo que asegura que cada registro sea identificable de manera particular, asi como todas las 
-            entradas son atómicas, lo que significa que cada campo contiene un solo valor. Esto evita la redundancia y permite una fácil manipulación 
+            entradas son atómicas, lo que significa que cada campo contiene un solo valor para que evite la redundancia y permita una fácil manipulación 
             de los datos, ya que no hay campos que contengan listas o conjuntos de valores.</p>
 
         <h3>2NF (Segunda Forma Normal)</h3>
         <p>Se ha eliminado la dependencia parcial de los atributos, asegurando que todos los atributos dependen completamente de la clave primaria.</p>
-        <p>Se ha eliminado la dependencia parcial de los atributos, asegurando que todos los atributos dependen completamente de la clave primaria. Esto 
-            significa que, si una clave primaria es compuesta, todos los atributos no clave deben depender de la totalidad de esta clave y no solo de una 
-            parte. Esta práctica minimiza la redundancia de datos y asegura que cada pieza de información esté relacionada de manera adecuada con su 
+        <p>Se ha eliminado la dependencia parcial de los atributos, asegurando que todos los atributos dependen completamente de la clave primaria, ya que
+            si una clave primaria es compuesta, todos los atributos no clave deben depender de la totalidad de esta clave y no solo de una 
+            parte, para minimiza la redundancia de datos y asegura que cada pieza de información esté relacionada de manera adecuada con su 
             identificador único.</p>
 
         <h3>3NF (Tercera Forma Normal)</h3>
         <p>No hay dependencias transitivas; todos los atributos son dependientes directamente de la clave primaria.</p>
-        <p>No hay dependencias transitivas; todos los atributos son dependientes directamente de la clave primaria. Esto significa que no hay atributos no 
-            clave que dependan de otros atributos no clave. Al eliminar estas dependencias, se evita la duplicación de datos y se mejora la integridad de 
+        <p>No hay dependencias transitivas, todos los atributos son dependientes directamente de la clave primaria, para que no existan atributos no 
+            clave que dependan de otros atributos no clave, cuando se eliminan estas dependencias se evita la duplicación de datos y se busca mejorar la integridad de 
             la base de datos, ya que los cambios en un atributo no afectarán a otros de manera inesperada.</p>
     </ul>
 
